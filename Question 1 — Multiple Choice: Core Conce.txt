@@ -1,0 +1,250 @@
+Question 1 — Multiple Choice: Core Concepts
+
+B
+B
+C
+A
+B
+B
+B
+B
+C
+B
+B
+C
+C
+B
+B
+
+
+Question 2 — Python & Environment Setup
+
+
+
+$ python3 --version
+
+Python 3.12.9
+
+
+
+$ conda env list
+
+conda: command not found
+
+
+
+Conda is not installed in this environment. To use conda environments, I would install Miniconda or Anaconda and then run `conda env list` again.
+
+
+
+Question 3 
+
+(A)
+
+$ echo $SHELL
+
+/bin/bash
+
+(b)
+
+Answer:
+
+Operating system: Microsoft Azure Linux 3.0 (Linux kernel 6.1.146.1-microsoft-standard).
+The terminal is running a native Linux bash shell (not Windows PowerShell), because echo $SHELL returns /bin/bash, which is a POSIX shell path used on Linux systems.
+(c)
+
+Answer:
+
+PowerShell and POSIX shells (bash/zsh) use different command syntax and environment variable conventions, so commands such as export API_KEY=abc123 or source venv/bin/activate can fail in PowerShell because PowerShell uses different commands (for example, $env:API_KEY="abc123" and different virtual environment activation scripts).
+
+
+
+Question 4 — CLI: Navigation and Predicting Output
+
+A - cd /home/user/projects/sctp
+
+B 
+
+$ pwd
+
+/home/user/projects/sctp
+
+$ ls
+
+data.csv
+
+
+
+C
+
+mkdir output
+
+cd ..
+
+D - The error means there is no directory named reports in the current location (or the path was typed incorrectly), and I would run ls to see what files and folders are actually present in the current directory.
+
+
+
+Question 5 — Operating Systems, Terminals, and Shells
+
+
+
+a) What is a kernel, in plain language?
+
+Answer:
+
+The kernel is the core part of an operating system that acts as a bridge between software and hardware. It manages things like memory, CPU time, storage, and devices so that programs can run without needing to interact directly with the hardware.
+
+(b) A classmate says: "I installed WSL, so now I have two completely separate operating systems, Windows and Linux, running side by side, each totally independent."
+
+Answer:
+
+Not exactly. WSL lets you run a Linux environment inside Windows, but it is still integrated with Windows and shares access to resources such as files, networking, and hardware. While it feels like a Linux system, it is not completely independent in the same way as having two separate computers.
+
+
+
+(c) Explain the difference between a terminal (emulator) and a shell, and give one example of each.
+
+Answer:
+
+A terminal is the application window you use to interact with the command line, while a shell is the program inside the terminal that reads and executes your commands. For example, Windows Terminal is a terminal emulator, and bash is a shell.
+
+
+
+Question 6 — AI Literacy: Prompt Engineering
+
+Task 1 — Analysis
+
+(a) Which prompt do you think will get a better response from an AI? State your choice (A or B).
+
+Answer:
+
+B
+
+(b) Give two reasons to support your choice.
+
+Reason 1:
+
+Prompt B is more structured and clearly separates the role, task, data, audience, and constraints, making it easier for the AI to understand exactly what is required.
+
+Reason 2:
+
+Prompt B provides explicit steps for the analysis, reducing ambiguity and increasing the likelihood that the AI will include all requested outputs in its response.
+
+(c) What is one strength of the prompt you did NOT choose?
+
+Answer:
+
+Prompt A provides more business context and sounds more natural, which can help the AI better understand the purpose and importance of the task.
+
+
+
+Task 2 — Rewrite
+
+Your rewritten prompt:
+
+Role: You are a data analyst helping a retail marketing team.
+
+Context: We have just completed a three-month marketing campaign and collected approximately 500 customer survey responses in a spreadsheet. Each response includes the customer's age group, product purchased, satisfaction rating (1-5), and a short written comment.
+
+Task: Analyse the survey data.
+
+Steps:
+
+Identify the age groups with the lowest satisfaction scores.
+Identify the products with the lowest satisfaction scores.
+Extract the most common complaint themes from the written comments.
+Summarise the findings in a short executive summary.
+Audience: CEO presentation next Friday.
+
+Constraints: Keep the summary concise, easy to understand, and free of technical jargon.
+
+What you borrowed and why:
+
+I chose Prompt B and borrowed the business context and background information from Prompt A. Adding the campaign details and the reason for the analysis gives the AI more context about the situation, while keeping Prompt B's clear structure and instructions helps ensure a more focused and complete response.
+
+
+
+Question 7 — Python: Read and Predict Output  [Short Answer — Write Code]
+
+(a) What does this print? Write the exact value.
+
+17
+
+(b) In one sentence, describe in plain English what this loop computes.
+
+Answer:
+
+It adds together all numbers in the list that are greater than 4 and prints the total.
+
+(c) Write the two lines this program prints, in order.
+
+Answer:
+
+Hello, world!
+
+
+
+Question 8 — Python: Find and Fix the Bug  [Short Answer — Write Code]
+
+
+
+(a) What does the buggy version actually return for [1, 2, 3, 4, 5, 6, 8], and why?
+
+It returns 3 because the condition n % 2 == 1 counts odd numbers, not even numbers. In the list, the odd numbers are 1, 3, and 5, so the count is 3.
+
+
+
+(b) Fix the bug. Write the corrected function below.
+
+def count_evens(numbers):
+
+count = 0
+
+for n in numbers:
+
+if n % 2 == 0:
+
+count = count + 1
+
+return count
+
+
+
+(c) In one sentence, explain in plain English what n % 2 == 0 checks.
+
+It checks whether n is evenly divisible by 2, which means the number is even.
+
+
+
+Question 9 — GitHub: Git Workflow  [Short Answer]
+
+# Step 1 — Create a new branch called `my-solutions`:
+
+git branch my-solutions
+
+
+
+# Step 2 — Switch to `my-solutions`:
+
+git checkout my-solutions
+
+
+
+# Step 3 — Stage q4.md:
+
+git add q4.md
+
+
+
+# Step 4 — Commit with message "Add Q4 answers":
+
+git commit -m "Add Q4 answers"
+
+
+
+# Step 5 — Push `my-solutions` to the remote:
+
+git push -u origin my-solutions
+
+Changes not staged for commit means Git has detected modified files that will not be included in the next commit until they are staged, and you can move a file into the next commit with git add <filename> (for example, git add q4.md).
