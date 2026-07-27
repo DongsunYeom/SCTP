@@ -1,0 +1,165 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2575.7">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 20.0px 'Helvetica Neue'}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 13.0px 'Helvetica Neue'}
+    p.p3 {margin: 0.0px 0.0px 0.0px 0.0px; font: 13.0px 'Helvetica Neue'; min-height: 15.0px}
+    p.p4 {margin: 0.0px 0.0px 2.0px 0.0px; font: 16.0px 'Helvetica Neue'}
+    li.li2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 13.0px 'Helvetica Neue'}
+    span.s1 {font: 9.0px Menlo}
+    ol.ol1 {list-style-type: decimal}
+    ul.ul1 {list-style-type: disc}
+  </style>
+</head>
+<body>
+<p class="p1"><b>Question 1 — Multiple Choice: Core Concepts</b></p>
+<ol class="ol1">
+  <li class="li2"><b>B</b><b></b></li>
+  <li class="li2"><b>B</b><b></b></li>
+  <li class="li2"><b>C</b><b></b></li>
+  <li class="li2"><b>A</b><b></b></li>
+  <li class="li2"><b>B</b><b></b></li>
+  <li class="li2"><b>B</b><b></b></li>
+  <li class="li2"><b>B</b><b></b></li>
+  <li class="li2"><b>B</b><b></b></li>
+  <li class="li2"><b>C</b><b></b></li>
+  <li class="li2"><b>B</b><b></b></li>
+  <li class="li2"><b>B</b><b></b></li>
+  <li class="li2"><b>C</b><b></b></li>
+  <li class="li2"><b>C</b><b></b></li>
+  <li class="li2"><b>B</b><b></b></li>
+  <li class="li2"><b>B</b><b></b></li>
+</ol>
+<p class="p3"><br></p>
+<p class="p2"><b>Question 2 — Python &amp; Environment Setup</b></p>
+<p class="p3"><br></p>
+<p class="p2">$ python3 --version</p>
+<p class="p2">Python 3.12.9</p>
+<p class="p3"><br></p>
+<p class="p2">$ conda env list</p>
+<p class="p2">conda: command not found</p>
+<p class="p3"><br></p>
+<p class="p2">Conda is not installed in this environment. To use conda environments, I would install Miniconda or Anaconda and then run `conda env list` again.</p>
+<p class="p3"><br></p>
+<p class="p2"><b>Question 3 </b></p>
+<p class="p2"><b>(A)</b></p>
+<p class="p2">$ echo $SHELL</p>
+<p class="p2">/bin/bash</p>
+<p class="p4"><b>(b)</b></p>
+<p class="p2"><b>Answer:</b><b></b></p>
+<ul class="ul1">
+  <li class="li2"><span class="s1"></span>Operating system: Microsoft Azure Linux 3.0 (Linux kernel 6.1.146.1-microsoft-standard).</li>
+  <li class="li2"><span class="s1"></span>The terminal is running a native Linux bash shell (not Windows PowerShell), because echo $SHELL returns /bin/bash, which is a POSIX shell path used on Linux systems.</li>
+</ul>
+<p class="p4"><b>(c)</b></p>
+<p class="p2"><b>Answer:</b><b></b></p>
+<p class="p2">PowerShell and POSIX shells (bash/zsh) use different command syntax and environment variable conventions, so commands such as export API_KEY=abc123 or source venv/bin/activate can fail in PowerShell because PowerShell uses different commands (for example, $env:API_KEY="abc123" and different virtual environment activation scripts).</p>
+<p class="p3"><br></p>
+<p class="p2"><b>Question 4 — CLI: Navigation and Predicting Output</b></p>
+<p class="p2"><b>A -</b> cd /home/user/projects/sctp</p>
+<p class="p2"><b>B<span class="Apple-converted-space"> </span></b><b></b></p>
+<p class="p2">$ pwd</p>
+<p class="p2">/home/user/projects/sctp</p>
+<p class="p2">$ ls</p>
+<p class="p2">data.csv</p>
+<p class="p3"><br></p>
+<p class="p2"><b>C</b><b></b></p>
+<p class="p2">mkdir output</p>
+<p class="p2">cd ..</p>
+<p class="p2"><b>D - </b>The error means there is no directory named reports in the current location (or the path was typed incorrectly), and I would run ls to see what files and folders are actually present in the current directory.</p>
+<p class="p3"><br></p>
+<p class="p2"><b>Question 5 — Operating Systems, Terminals, and Shells</b></p>
+<p class="p3"><br></p>
+<p class="p2"><b>a) What is a kernel, in plain language?</b></p>
+<p class="p2"><b>Answer:</b><b></b></p>
+<p class="p2">The kernel is the core part of an operating system that acts as a bridge between software and hardware. It manages things like memory, CPU time, storage, and devices so that programs can run without needing to interact directly with the hardware.</p>
+<p class="p2"><b>(b) A classmate says: "I installed WSL, so now I have two completely separate operating systems, Windows and Linux, running side by side, each totally independent."</b></p>
+<p class="p2"><b>Answer:</b><b></b></p>
+<p class="p2">Not exactly. WSL lets you run a Linux environment inside Windows, but it is still integrated with Windows and shares access to resources such as files, networking, and hardware. While it feels like a Linux system, it is not completely independent in the same way as having two separate computers.</p>
+<p class="p3"><br></p>
+<p class="p2"><b>(c) Explain the difference between a terminal (emulator) and a shell, and give one example of each.</b></p>
+<p class="p2"><b>Answer:</b><b></b></p>
+<p class="p2">A terminal is the application window you use to interact with the command line, while a shell is the program inside the terminal that reads and executes your commands. For example, <b>Windows Terminal</b> is a terminal emulator, and <b>bash</b> is a shell.</p>
+<p class="p3"><br></p>
+<p class="p2"><b>Question 6 — AI Literacy: Prompt Engineering</b></p>
+<p class="p4"><b>Task 1 — Analysis</b></p>
+<p class="p4"><b>(a) Which prompt do you think will get a better response from an AI? State your choice (A or B).</b></p>
+<p class="p2"><b>Answer:</b><b></b></p>
+<p class="p2"><b>B</b><b></b></p>
+<p class="p4"><b>(b) Give two reasons to support your choice.</b></p>
+<p class="p2"><b>Reason 1:</b><b></b></p>
+<p class="p2">Prompt B is more structured and clearly separates the role, task, data, audience, and constraints, making it easier for the AI to understand exactly what is required.</p>
+<p class="p2"><b>Reason 2:</b><b></b></p>
+<p class="p2">Prompt B provides explicit steps for the analysis, reducing ambiguity and increasing the likelihood that the AI will include all requested outputs in its response.</p>
+<p class="p4"><b>(c) What is one strength of the prompt you did NOT choose?</b></p>
+<p class="p2"><b>Answer:</b><b></b></p>
+<p class="p2">Prompt A provides more business context and sounds more natural, which can help the AI better understand the purpose and importance of the task.</p>
+<p class="p3"><br></p>
+<p class="p4"><b>Task 2 — Rewrite</b></p>
+<p class="p4"><b>Your rewritten prompt:</b></p>
+<p class="p2"><b>Role:</b> You are a data analyst helping a retail marketing team.</p>
+<p class="p2"><b>Context:</b> We have just completed a three-month marketing campaign and collected approximately 500 customer survey responses in a spreadsheet. Each response includes the customer's age group, product purchased, satisfaction rating (1-5), and a short written comment.</p>
+<p class="p2"><b>Task:</b> Analyse the survey data.</p>
+<p class="p2"><b>Steps:</b><b></b></p>
+<ol class="ol1">
+  <li class="li2">Identify the age groups with the lowest satisfaction scores.</li>
+  <li class="li2">Identify the products with the lowest satisfaction scores.</li>
+  <li class="li2">Extract the most common complaint themes from the written comments.</li>
+  <li class="li2">Summarise the findings in a short executive summary.</li>
+</ol>
+<p class="p2"><b>Audience:</b> CEO presentation next Friday.</p>
+<p class="p2"><b>Constraints:</b> Keep the summary concise, easy to understand, and free of technical jargon.</p>
+<p class="p4"><b>What you borrowed and why:</b></p>
+<p class="p2">I chose Prompt B and borrowed the <b>business context and background information</b> from Prompt A. Adding the campaign details and the reason for the analysis gives the AI more context about the situation, while keeping Prompt B's clear structure and instructions helps ensure a more focused and complete response.</p>
+<p class="p3"><br></p>
+<p class="p2"><b>Question 7 — Python: Read and Predict Output<span class="Apple-converted-space">  </span>[Short Answer — Write Code]</b><b></b></p>
+<p class="p2">(a) What does this print? Write the exact value.</p>
+<p class="p2">17</p>
+<p class="p2"><b>(b) In one sentence, describe in plain English what this loop computes.</b></p>
+<p class="p2"><b>Answer:</b><b></b></p>
+<p class="p2">It adds together all numbers in the list that are greater than 4 and prints the total.</p>
+<p class="p2"><b>(c) Write the two lines this program prints, in order.</b></p>
+<p class="p2"><b>Answer:</b><b></b></p>
+<p class="p2">Hello, world!</p>
+<p class="p3"><br></p>
+<p class="p2"><b>Question 8 — Python: Find and Fix the Bug<span class="Apple-converted-space">  </span>[Short Answer — Write Code]</b></p>
+<p class="p3"><br></p>
+<p class="p2"><b>(a) What does the buggy version actually return for [1, 2, 3, 4, 5, 6, 8], and why?</b><b></b></p>
+<p class="p2">It returns <b>3</b> because the condition n % 2 == 1 counts <b>odd</b> numbers, not even numbers. In the list, the odd numbers are 1, 3, and 5, so the count is 3.</p>
+<p class="p3"><br></p>
+<p class="p2"><b>(b) Fix the bug. Write the corrected function below.</b></p>
+<p class="p2">def count_evens(numbers):</p>
+<p class="p2">count = 0</p>
+<p class="p2">for n in numbers:</p>
+<p class="p2">if n % 2 == 0:</p>
+<p class="p2">count = count + 1</p>
+<p class="p2">return count</p>
+<p class="p3"><br></p>
+<p class="p2"><b>(c) In one sentence, explain in plain English what n % 2 == 0 checks.</b><b></b></p>
+<p class="p2">It checks whether n is evenly divisible by 2, which means the number is even.</p>
+<p class="p3"><br></p>
+<p class="p2"><b>Question 9 — GitHub: Git Workflow<span class="Apple-converted-space">  </span>[Short Answer]</b><b></b></p>
+<p class="p2"># Step 1 — Create a new branch called `my-solutions`:</p>
+<p class="p2">git branch my-solutions</p>
+<p class="p3"><br></p>
+<p class="p2"># Step 2 — Switch to `my-solutions`:</p>
+<p class="p2">git checkout my-solutions</p>
+<p class="p3"><br></p>
+<p class="p2"># Step 3 — Stage q4.md:</p>
+<p class="p2">git add q4.md</p>
+<p class="p3"><br></p>
+<p class="p2"># Step 4 — Commit with message "Add Q4 answers":</p>
+<p class="p2">git commit -m "Add Q4 answers"</p>
+<p class="p3"><br></p>
+<p class="p2"># Step 5 — Push `my-solutions` to the remote:</p>
+<p class="p2">git push -u origin my-solutions<br>
+</p>
+<p class="p2">Changes not staged for commit means Git has detected modified files that will not be included in the next commit until they are staged, and you can move a file into the next commit with git add &lt;filename&gt; (for example, git add q4.md).</p>
+</body>
+</html>
