@@ -4,4 +4,4 @@ __pycache__/
 .streamlit/secrets.toml
 data/sg_jobs.csv
 *.parquet
-
+data/
