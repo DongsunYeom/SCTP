@@ -43,6 +43,38 @@ ROOT = Path(__file__).parent
 # Path to the full course dataset (SGJobData.csv).
 COURSE_FILE = ROOT / "data" / "SGJobData.csv"
 
+# Plain-language label and meaning for each check in the Data quality tab.
+QUALITY_CHECKS = {
+    "rows": ("Postings in selection", "How many job postings the current filters keep."),
+    "duplicate_rows": ("Duplicate rows", "Rows that exactly match another row. Should be 0."),
+    "missing_titles": ("Missing job titles", "Postings with no title. Title-based views skip them."),
+    "missing_salaries": ("Missing salaries", "Postings with no usable salary. They stay in counts but not in pay charts."),
+    "unparsed_dates": ("Unreadable dates", "Postings whose posted date could not be read. They are left out of Trends."),
+}
+
+# Columns shown in the Data quality preview, in reading order.
+PREVIEW_COLUMNS = [
+    "title", "postedCompany_name", "category", "positionLevels", "employmentTypes",
+    "average_salary", "salary_minimum", "salary_maximum", "numberOfVacancies",
+    "metadata_totalNumberJobApplication", "minimumYearsExperience", "posted_date",
+]
+
+# Readable headers and number formats for the preview columns.
+PREVIEW_CONFIG = {
+    "title": st.column_config.TextColumn("Job title"),
+    "postedCompany_name": st.column_config.TextColumn("Company"),
+    "category": st.column_config.TextColumn("Category"),
+    "positionLevels": st.column_config.TextColumn("Career level"),
+    "employmentTypes": st.column_config.TextColumn("Employment type"),
+    "average_salary": st.column_config.NumberColumn("Average salary (S$)", format="%.0f"),
+    "salary_minimum": st.column_config.NumberColumn("Min salary (S$)", format="%d"),
+    "salary_maximum": st.column_config.NumberColumn("Max salary (S$)", format="%d"),
+    "numberOfVacancies": st.column_config.NumberColumn("Vacancies", format="%d"),
+    "metadata_totalNumberJobApplication": st.column_config.NumberColumn("Applications", format="%d"),
+    "minimumYearsExperience": st.column_config.NumberColumn("Years experience needed", format="%d"),
+    "posted_date": st.column_config.DateColumn("Posted date", format="YYYY-MM-DD"),
+}
+
 
 # Set the browser tab title, tab icon, and use the full browser width.
 st.set_page_config(page_title="Singapore Jobs Explorer", page_icon="📊", layout="wide")
@@ -371,25 +403,49 @@ with skills_tab:
 with career_tab:
     # Heading for the recommender.
     st.subheader("Find career tracks that fit what matters to you")
-    # Short explanation of how the score works.
-    st.caption("A track is one category and one seniority band. Each factor is scored 0–100 across all tracks, then combined using your weights.")
+    # Plain-language explanation of what a track is and how the ranking works.
+    st.caption(
+        "A **track** is one industry category at one seniority level, for example Information Technology · Mid. "
+        "Each track gets a score from 0 to 100 on four factors, compared with the other tracks. "
+        "The **Fit score** is the weighted average of those four factors, using the weights you set below."
+    )
 
     # Create four side-by-side columns, one per weight slider.
     w_demand, w_pay, w_competition, w_access = st.columns(4)
-    # Store the user's weight for each factor (0 to 5).
+    # Store the user's importance for each factor (0 = ignore it, 5 = matters most).
     weights = {
         # How much job demand matters.
-        "demand": w_demand.slider("Demand", 0, 5, 3),
+        "demand": w_demand.slider(
+            "How much do you care about many job openings?",
+            0, 5, 3,
+            help="Tracks with more job postings score higher. 0 = ignore, 5 = matters most.",
+        ),
         # How much pay matters.
-        "pay": w_pay.slider("Pay", 0, 5, 3),
+        "pay": w_pay.slider(
+            "How much do you care about high pay?",
+            0, 5, 3,
+            help="Tracks with a higher median advertised salary score higher. 0 = ignore, 5 = matters most.",
+        ),
         # How much low competition matters.
-        "competition": w_competition.slider("Low competition", 0, 5, 2),
+        "competition": w_competition.slider(
+            "How much do you care about less competition?",
+            0, 5, 2,
+            help="Tracks with fewer applications per vacancy score higher. 0 = ignore, 5 = matters most.",
+        ),
         # How much an easy entry (low years of experience needed) matters.
-        "access": w_access.slider("Easy to enter", 0, 5, 2),
+        "access": w_access.slider(
+            "How much do you care about an easy entry?",
+            0, 5, 2,
+            help="Tracks where more adverts ask for 3 years of experience or less score higher. 0 = ignore, 5 = matters most.",
+        ),
     }
 
     # Slider for the minimum number of postings a track needs to be included.
-    min_track_postings = st.slider("Minimum postings per track", 200, 5_000, 1_000, step=100)
+    min_track_postings = st.slider(
+        "Hide tracks with fewer job postings than",
+        200, 5_000, 1_000, step=100,
+        help="Small tracks are removed before scoring. Raise this to see only large, common tracks. Lower it to include small, niche tracks.",
+    )
     # Build the career-track table, keeping only tracks with enough postings.
     tracks = career_tracks(complete, min_track_postings)
 
@@ -429,13 +485,58 @@ with quality_tab:
     st.subheader("Checks on the selected data")
     # Calculate data-quality counts for the filtered data.
     quality = quality_summary(filtered)
-    # Show the counts as a table, turning each key into a readable title (e.g. "missing_salary" -> "Missing Salary").
-    st.dataframe(pd.DataFrame([{"Check": key.replace("_", " ").title(), "Count": value} for key, value in quality.items()]), hide_index=True, use_container_width=True)
-
-    # Notes on how missing values and dates are handled.
-    st.write("Missing salary values remain missing. Dates that cannot be parsed are excluded from the time trend. Review these counts before using the charts in a decision.")
+    # Total postings in the selection, used to calculate each share.
+    total_rows = quality["rows"]
+    # One row per check: its count, its share of all postings, and what it means.
+    check_rows = [
+        {
+            "Check": label,
+            "Count": quality[key],
+            "Share of postings (%)": quality[key] / total_rows * 100 if total_rows else 0,
+            "What it means": meaning,
+        }
+        for key, (label, meaning) in QUALITY_CHECKS.items()
+    ]
+    # Show the checks table with readable number formats.
+    st.dataframe(
+        pd.DataFrame(check_rows),
+        hide_index=True,
+        use_container_width=True,
+        column_config={
+            "Count": st.column_config.NumberColumn(format="%d"),
+            "Share of postings (%)": st.column_config.NumberColumn(format="%.2f%%"),
+        },
+    )
+    # Guide that explains how to read the checks table.
+    with st.expander("💡 How to read the checks", expanded=False):
+        st.info("""
+* **Count:** how many postings fail this check.
+* **Share of postings:** the count divided by all postings in the selection.
+* **Duplicate rows and unreadable dates** should be close to 0.
+* **Missing salaries are normal.** Many adverts do not list pay, so these postings stay in the counts but not in pay charts.
+* **Missing job titles** are skipped by the title and skills views.
+""")
 
     # Heading for the raw data preview.
     st.subheader("Preview")
-    # Show the first 100 rows of the filtered data.
-    st.dataframe(filtered.head(100), use_container_width=True)
+    # Show the first 100 postings, with only the columns that matter most for reading the data.
+    st.dataframe(
+        filtered[PREVIEW_COLUMNS].head(100),
+        hide_index=True,
+        use_container_width=True,
+        column_config=PREVIEW_CONFIG,
+    )
+    # Guide that explains what each preview column means.
+    with st.expander("💡 How to read the preview", expanded=False):
+        st.info("""
+* **Job title:** the advertised role. Blank titles are shown as empty.
+* **Company:** the employer that posted the advert.
+* **Category:** the industry. One posting can belong to more than one category, so the same posting can appear in several views.
+* **Career level / Employment type:** the seniority and contract type listed in the advert.
+* **Average salary (S$):** the midpoint of the listed pay range. Empty means no usable salary.
+* **Min / Max salary (S$):** the pay range as listed.
+* **Vacancies:** the number of open seats in the advert.
+* **Applications:** the number of applications recorded for the advert.
+* **Years experience needed:** the minimum years of experience the advert asks for.
+* **Posted date:** the date the advert was posted. Empty means the date could not be read.
+""")
