@@ -40,9 +40,6 @@ from data_utils import (
 # Folder that contains this app.py file.
 ROOT = Path(__file__).parent
 
-# Path to the small fictional demo dataset.
-DEMO_FILE = ROOT / "data" / "demo_jobs.csv"
-
 # Path to the full course dataset (SGJobData.csv).
 COURSE_FILE = ROOT / "data" / "SGJobData.csv"
 
@@ -57,19 +54,10 @@ st.title("Singapore Jobs Explorer")
 st.caption("A practical view of role demand and salary ranges for career conversations.")
 
 
-# If the course CSV file exists on disk...
-if COURSE_FILE.exists():
-    # ...load the course dataset.
-    raw = read_jobs(COURSE_FILE)
-    # Label shown in the info box so the user knows which data is used.
-    data_label = "Full course dataset"
-
-# Otherwise (the course file is missing)...
-else:
-    # ...load the demo dataset instead.
-    raw = read_jobs(DEMO_FILE)
-    # Label shown in the info box for the demo data.
-    data_label = "Fictional demo data"
+# Load the course dataset.
+raw = read_jobs(COURSE_FILE)
+# Label shown in the info box so the user knows which data is used.
+data_label = "Full course dataset"
 
 
 # Clean the raw data so the charts and filters work on consistent columns.
