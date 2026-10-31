@@ -16,7 +16,7 @@
 
 ## Speaker 1 — Why this project (1 min 30 sec)
 
-“Good morning/afternoon. We are Group 7, and this is Singapore Jobs Explorer.
+“Good morning/afternoon. We are Team 2, and this is Singapore Jobs Explorer.
 
 A career coach or job seeker may want to compare roles, advertised pay and how many applications there are for each vacancy. Finding that information one advert at a time takes time. We built a dashboard that brings these views together and lets users narrow them by industry, career level and employment type.
 
